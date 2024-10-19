@@ -7,14 +7,22 @@
 // Execute `rustlings hint traits1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
-
+//self(小写)表示当前结构体或枚举的实例
+//Self(大写)表示当前实现 trait 或方法的类型
+//方法会返回一个与 self 相同类型的新实例。
 impl AppendBar for String {
     // TODO: Implement `AppendBar` for type `String`.
+    fn append_bar(self) ->Self{
+        
+        //self+"Bar"
+        let mut new_string = self;  // 将 self 的所有权转移到可变的 new_string
+        new_string.push_str("Bar"); // 使用 push_str 追加字符串
+        new_string                 // 返回新的字符串
+    }
 }
 
 fn main() {
