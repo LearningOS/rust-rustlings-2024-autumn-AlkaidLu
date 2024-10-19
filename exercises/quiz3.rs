@@ -24,6 +24,7 @@ pub struct ReportCard<T> {
     pub student_age: u8,
 }
 
+//在 Rust 中，能够被格式化为字符串的类型必须实现 Display trait
 impl<T:Display> ReportCard<T> {
     pub fn print(&self) -> String {
         format!("{} ({}) - achieved a grade of {}",
