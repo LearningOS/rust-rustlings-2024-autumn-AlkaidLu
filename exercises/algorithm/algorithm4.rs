@@ -3,7 +3,6 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -50,13 +49,34 @@ where
 
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
-        //TODO
+        if self.root.is_none() {
+            self.root = Some(Box::new(TreeNode::new(value)));
+        } else {
+            // 否则调用节点的插入方法
+            self.root.as_mut().unwrap().insert(value);
+        }
+        
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
         //TODO
-        true
+        self.search_node(&self.root, value)
+    }
+
+    fn search_node(&self, node: &Option<Box<TreeNode<T>>>, value: T) -> bool {
+        match node {
+            Some(n) => {
+                if value == n.value {
+                    true
+                } else if value < n.value {
+                    self.search_node(&n.left, value)
+                } else {
+                    self.search_node(&n.right, value)
+                }
+            }
+            None => false,
+        }
     }
 }
 
@@ -67,6 +87,21 @@ where
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
         //TODO
+        if value < self.value {
+            // 如果左子树为空，插入新节点；否则递归到左子树
+            if self.left.is_none() {
+                self.left = Some(Box::new(TreeNode::new(value)));
+            } else {
+                self.left.as_mut().unwrap().insert(value);
+            }
+        } else if value > self.value {
+            // 如果右子树为空，插入新节点；否则递归到右子树
+            if self.right.is_none() {
+                self.right = Some(Box::new(TreeNode::new(value)));
+            } else {
+                self.right.as_mut().unwrap().insert(value);
+            }
+        }
     }
 }
 
