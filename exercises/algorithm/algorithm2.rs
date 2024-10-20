@@ -2,7 +2,7 @@
 	double linked list reverse
 	This problem requires you to reverse a doubly linked list
 */
-// I AM NOT DONE
+
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
@@ -73,7 +73,47 @@ impl<T> LinkedList<T> {
         }
     }
 	pub fn reverse(&mut self){
-		// TODO
+        /* 
+        if self.length == 0 {
+            return; // 如果链表为空，直接返回
+        }
+        if self.length!=0{
+            self.end.unwrap().next=self.end.unwrap().prev;
+            self.end.unwrap().prev=None;
+        }
+        let mut i:u32=self.length-1;
+        while i>0 {
+            let tmp=self.get(i as i32).unwrap().next.clone();
+            self.get(i).unwrap().next=self.get(i as i32).unwrap().prev;
+            self.get(i).unwrap().prev=tmp;
+            i-=1;
+        }
+		self.start.prev=self.end.next;
+        self.start.next=None;
+        */
+        if self.length == 0 {
+            return; // 如果链表为空，直接返回
+        }
+    
+        let mut current = self.start; // 从头节点开始
+    
+        while let Some(node) = current {
+            // 使用中间变量存储原始的指针
+            let next_node = unsafe { (*node.as_ptr()).next }; // 获取下一个节点
+            let prev_node = unsafe { (*node.as_ptr()).prev }; // 获取上一个节点
+    
+            // 交换 next 和 prev
+            unsafe {
+                (*node.as_ptr()).next = prev_node; // 将当前节点的 next 指向上一个节点
+                (*node.as_ptr()).prev = next_node; // 将当前节点的 prev 指向下一个节点
+            }
+    
+            current = next_node; // 移动到下一个节点
+        }
+    
+        // 更新链表的 start 和 end
+        std::mem::swap(&mut self.start, &mut self.end);
+
 	}
 }
 
