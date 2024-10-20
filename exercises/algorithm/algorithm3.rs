@@ -3,10 +3,29 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
+fn sort<T: std::cmp::PartialOrd+ Clone>(array: &mut [T]){
 	//TODO
+    let len = array.len();
+    let mut i = 1;
+
+    while i < len { // 确保不会越界
+        let key = array[i].clone();
+        let mut j = i as isize - 1; // 使用 isize 处理负索引
+
+        while j >= 0 && key < array[j as usize] { // 将 j 转为 usize 进行索引
+            array[j as usize + 1] = array[j as usize].clone(); // 这里 j 是有效的
+            j -= 1;
+        }
+
+        // 在这里需要确保 j + 1 仍然在数组范围内
+        if ((j + 1) as usize) < len {
+            array[(j + 1) as usize] = key;
+        }
+        i += 1;
+    }
+       
+
 }
 #[cfg(test)]
 mod tests {
